@@ -21,6 +21,18 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   List<Icon> scoreKeeper = [];
+  List<String> questions = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.',
+  ];
+  List<bool> answers = [
+    true,
+    false,
+    false,
+  ];
+  int questionNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,7 +44,7 @@ class _QuizState extends State<Quiz> {
               child: Padding(
                 padding: EdgeInsets.all(50.0),
                 child: Text(
-                  'This is where the question text will go',
+                  questions[questionNumber],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -62,10 +74,17 @@ class _QuizState extends State<Quiz> {
                         ),
                       ),
                       onPressed: () {
+                        bool correction = answers[questionNumber];
+                        if (correction == true) {
+                          print('You got it right!');
+                        } else {
+                          print('You got it wrong!');
+                        }
                         setState(() {
                           scoreKeeper.add(
                             new Icon(Icons.check, color: Colors.green,),
                           );
+                          questionNumber++;
                         });
                       },
                     ),
@@ -86,10 +105,17 @@ class _QuizState extends State<Quiz> {
                         ),
                       ),
                       onPressed: () {
+                        bool correction = answers[questionNumber];
+                        if (correction == false) {
+                          print('You got it right!');
+                        } else {
+                          print('You got it wrong!');
+                        }
                         setState(() {
                           scoreKeeper.add(
                               new Icon(Icons.close, color: Colors.red,)
                           );
+                          questionNumber++;
                         });
                       },
                     ),
