@@ -20,6 +20,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<Icon> scoreKeeper = [];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,7 +62,11 @@ class _QuizState extends State<Quiz> {
                         ),
                       ),
                       onPressed: () {
-                        print('Button is tapped!');
+                        setState(() {
+                          scoreKeeper.add(
+                            new Icon(Icons.check, color: Colors.green,),
+                          );
+                        });
                       },
                     ),
                   ),
@@ -81,13 +86,20 @@ class _QuizState extends State<Quiz> {
                         ),
                       ),
                       onPressed: () {
-                        print('Button is tapped!');
+                        setState(() {
+                          scoreKeeper.add(
+                              new Icon(Icons.close, color: Colors.red,)
+                          );
+                        });
                       },
                     ),
                   ),
                 ),
               ],
             )),
+        Row(
+          children: scoreKeeper,
+        ),
       ],
     );
   }
