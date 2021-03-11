@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'quiz_brain.dart';
 
 void main() => runApp(QuizApp());
+
+QuizBrain quizBrain = QuizBrain();
 
 class QuizApp extends StatelessWidget {
   @override
@@ -22,22 +25,30 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   List<Icon> scoreKeeper = [];
-  List<Question> questions = [
-    // Questions
-    new Question(
-        q: 'You can lead a cow down stairs but not up stairs.',
-        a: true
-    ),
-    new Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        a: false
-    ),
-    new Question(
-        q: 'A slug\'s blood is green.',
-        a: false
-    ),
-  ];
-  int questionNumber = 0;
+
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizBrain.getQuestionAnswer();
+    setState(() {
+      if (quizBrain.isLastQuestionReached() == true) {
+        Alert(context: context, title: 'Quiz', desc: 'Quiz is ended!').show();
+        scoreKeeper = [];
+        quizBrain.resetQuestionNumber();
+      } else {
+        quizBrain.nextQuestion();
+        if (userPickedAnswer == correctAnswer) {
+          scoreKeeper.add(new Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scoreKeeper.add(new Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +61,7 @@ class _QuizState extends State<Quiz> {
               child: Padding(
                 padding: EdgeInsets.all(50.0),
                 child: Text(
-                  questions[questionNumber].questionText,
+                  quizBrain.getQuestionText(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -80,18 +91,7 @@ class _QuizState extends State<Quiz> {
                         ),
                       ),
                       onPressed: () {
-                        bool correction = questions[questionNumber].questionAnswer;
-                        if (correction == true) {
-                          print('You got it right!');
-                        } else {
-                          print('You got it wrong!');
-                        }
-                        setState(() {
-                          scoreKeeper.add(
-                            new Icon(Icons.check, color: Colors.green,),
-                          );
-                          questionNumber++;
-                        });
+                        checkAnswer(true);
                       },
                     ),
                   ),
@@ -111,18 +111,7 @@ class _QuizState extends State<Quiz> {
                         ),
                       ),
                       onPressed: () {
-                        bool correction = questions[questionNumber].questionAnswer;
-                        if (correction == false) {
-                          print('You got it right!');
-                        } else {
-                          print('You got it wrong!');
-                        }
-                        setState(() {
-                          scoreKeeper.add(
-                              new Icon(Icons.close, color: Colors.red,)
-                          );
-                          questionNumber++;
-                        });
+                        checkAnswer(false);
                       },
                     ),
                   ),
