@@ -1,4 +1,4 @@
-package com.example.clima;
+package co.appbrewery.clima;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
