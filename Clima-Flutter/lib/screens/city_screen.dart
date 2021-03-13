@@ -36,7 +36,9 @@ class _CityScreenState extends State<CityScreen> {
                 child: null,
               ),
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 child: Text(
                   'Get Weather',
                   style: kButtonTextStyle,
