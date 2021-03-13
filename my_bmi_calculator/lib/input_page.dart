@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'icon_widget.dart';
 import 'reusable_card.dart';
 import 'constants.dart';
+import 'calculator_brain.dart';
+import 'results_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum GenderType {
@@ -15,7 +17,6 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-
   int height = 180;
   int weight = 60;
   int age = 20;
@@ -127,7 +128,7 @@ class _InputPageState extends State<InputPage> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget> [
+                          children: <Widget>[
                             RoundIconButton(Icon(FontAwesomeIcons.minus), () {
                               setState(() {
                                 weight--;
@@ -152,7 +153,7 @@ class _InputPageState extends State<InputPage> {
                     kCardBackgroundColor,
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget> [
+                      children: <Widget>[
                         Text(
                           'AGE',
                           style: kLabelTextStyle,
@@ -163,7 +164,7 @@ class _InputPageState extends State<InputPage> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget> [
+                          children: <Widget>[
                             RoundIconButton(Icon(FontAwesomeIcons.minus), () {
                               setState(() {
                                 age--;
@@ -188,7 +189,17 @@ class _InputPageState extends State<InputPage> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/result');
+              CalculatorBrain calc = CalculatorBrain(height, weight);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                    calc.calculateBMI(),
+                    calc.getStatus(),
+                    calc.getAnalysis(),
+                  ),
+                ),
+              );
             },
             child: Container(
               child: Center(

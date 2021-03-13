@@ -3,9 +3,11 @@ import 'constants.dart';
 import 'reusable_card.dart';
 
 class ResultsPage extends StatelessWidget {
+  final String _bmi;
+  final String _status;
+  final String _analysis;
 
-  final String status = 'NORMAL';
-  final double result = 0.0;
+  ResultsPage(this._bmi, this._status, this._analysis);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class ResultsPage extends StatelessWidget {
                     child: Container(
                       child: Center(
                         child: Text(
-                          status,
+                          _status.toUpperCase(),
                           style: kLabelTextStyle.copyWith(
                             color: Colors.green.shade300,
                             fontWeight: FontWeight.bold,
@@ -51,7 +53,7 @@ class ResultsPage extends StatelessWidget {
                     flex: 1,
                     child: Center(
                       child: Text(
-                        result.toString(),
+                        _bmi,
                         style: kNumberTextStyle,
                       ),
                     ),
@@ -61,7 +63,7 @@ class ResultsPage extends StatelessWidget {
                     child: Container(
                       child: Center(
                         child: Text(
-                          'Your BMI result is quite low, you should eat more!',
+                          _analysis,
                           style: kBodyTextStyle,
                           textAlign: TextAlign.center,
                         ),
