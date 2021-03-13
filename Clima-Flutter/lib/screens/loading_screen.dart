@@ -8,11 +8,38 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
+  bool serviceEnabled;
+  LocationPermission permission;
+  Position position;
+
   void getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return print('Location services are disabled.');
+    }
+
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      print('Location permissions are denied, we cannot request permissions.');
+    }
+
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low,
     );
+    
     print(position);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLocation();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
   }
 
   @override
@@ -22,7 +49,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: RaisedButton(
           onPressed: () {
             //Get the current location
-            getLocation();
           },
           child: Text('Get Location'),
         ),
