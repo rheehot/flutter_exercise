@@ -34,12 +34,12 @@ class Location {
     }
   }
 
-  double getLatitude() {
-    return this.latitude;
+  String getLatitude() {
+    return this.latitude.toString();
   }
 
-  double getLongitude() {
-    return this.longitude;
+  String getLongitude() {
+    return this.longitude.toString();
   }
 
 }
