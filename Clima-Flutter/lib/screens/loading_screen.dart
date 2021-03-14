@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:clima/services/location.dart';
+import 'package:clima/services/networking.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -8,32 +9,35 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
-  bool serviceEnabled;
-  LocationPermission permission;
-  Position position;
+  double? latitude;
+  double? longitude;
 
-  void getLocation() async {
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return print('Location services are disabled.');
-    }
+  void getLocationData() async {
+    var weatherData;
+    String host = 'api.openweathermap.org';
+    String path = 'data/2.5/weather';
+    Map<String, String> obj = {
+      'lat': '35',
+      'lon': '139',
+      'appid': '1353bc9618730e86fe5a57a6e617539c'
+    };
 
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-      print('Location permissions are denied, we cannot request permissions.');
-    }
+    Location _location = Location();
+    await _location.getLocation();
 
-    position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low,
-    );
-    
-    print(position);
+    latitude = _location.getLatitude();
+    longitude = _location.getLongitude();
+
+    NetworkHelper networkHelper = NetworkHelper(host, path, obj);
+    weatherData = await networkHelper.getData();
+
+    print(weatherData);
   }
 
   @override
   void initState() {
     super.initState();
-    getLocation();
+    getLocationData();
   }
 
   @override
@@ -55,4 +59,5 @@ class _LoadingScreenState extends State<LoadingScreen> {
       ),
     );
   }
+
 }
