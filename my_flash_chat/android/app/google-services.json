@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "294163806240",
+    "project_id": "flash-chat-b9022",
+    "storage_bucket": "flash-chat-b9022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294163806240:android:0d5f0d007b5e928449e445",
+        "android_client_info": {
+          "package_name": "com.geonsang.my_flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294163806240-in7tmtcg1go9js6rj6hh2b302mfc11pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNTe1oddnIpuI7cfucS5BhPGS4-bzlzeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294163806240-in7tmtcg1go9js6rj6hh2b302mfc11pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
